@@ -1,0 +1,426 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zazieproductions.com/schemas/zmh-horror-sound-semantics-v0.1.schema.json",
+  "title": "ZMH Horror Sound Semantics Dataset Record Schema",
+  "description": "Machine-readable schema and controlled vocabularies for ZMH Horror Sound Semantics v0.1, published by Zazie Productions LLC — Zazie Media Holdings.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "sample_id",
+    "dataset_name",
+    "dataset_version",
+    "publisher",
+    "audio_filename",
+    "duration",
+    "sample_rate",
+    "primary_emotion",
+    "secondary_emotions",
+    "acoustic_texture",
+    "sound_event_category",
+    "intensity",
+    "intensity_score",
+    "tension",
+    "tension_score",
+    "rhythmic_characteristics",
+    "tonality",
+    "perceived_spatial_properties",
+    "cinematic_usage",
+    "natural_language_caption",
+    "annotation_confidence",
+    "annotation_provenance",
+    "human_review_status",
+    "copyright_and_licensing_status",
+    "psychological_label_disclaimer",
+    "split",
+    "recipe_id",
+    "variant_index",
+    "random_seed",
+    "generation_method",
+    "uses_pretrained_ai_model",
+    "uses_third_party_samples",
+    "is_authentic_human_or_field_recording",
+    "sha256_checksum",
+    "synthesis_parameters",
+    "acoustic_features",
+    "temporal_events"
+  ],
+  "$defs": {
+    "emotion_enum": {
+      "type": "string",
+      "enum": [
+        "dread",
+        "anxiety",
+        "uncertainty",
+        "suspense",
+        "shock",
+        "unease",
+        "anticipation",
+        "disorientation"
+      ]
+    },
+    "sound_event_category_enum": {
+      "type": "string",
+      "enum": [
+        "dissonant_drones",
+        "metallic_resonance",
+        "glitching_machinery",
+        "pulsating_bass_textures",
+        "digital_interference",
+        "atmospheric_tension_beds",
+        "irregular_rhythmic_transients",
+        "synthetic_creature_sounds",
+        "spectral_textures",
+        "unstable_pitch_modulated_tones"
+      ]
+    },
+    "acoustic_texture_enum": {
+      "type": "string",
+      "enum": [
+        "dense_sub_harmonic",
+        "inharmonic_metallic",
+        "granular_stutter",
+        "throbbing_low_end",
+        "bitcrushed_aliased",
+        "filtered_noise_wash",
+        "percussive_erratic",
+        "formant_guttural",
+        "crystalline_spectral",
+        "warped_microtonal"
+      ]
+    },
+    "intensity_enum": {
+      "type": "string",
+      "enum": [
+        "subtle",
+        "low",
+        "moderate",
+        "high",
+        "extreme"
+      ]
+    },
+    "tension_enum": {
+      "type": "string",
+      "enum": [
+        "latent",
+        "building",
+        "sustained",
+        "escalating",
+        "climactic"
+      ]
+    },
+    "rhythmic_characteristics_enum": {
+      "type": "string",
+      "enum": [
+        "arrhythmic_sustained",
+        "slow_periodic_pulse",
+        "fast_mechanical_stutter",
+        "syncopated_heartbeat",
+        "stochastic_intermittent",
+        "accelerating_tremolo",
+        "chaotic_polyrhythmic"
+      ]
+    },
+    "tonality_enum": {
+      "type": "string",
+      "enum": [
+        "atonal_noise",
+        "microtonal_cluster",
+        "dissonant_bichord",
+        "inharmonic_partial_series",
+        "dark_pedal_drone",
+        "unstable_glissando",
+        "ambiguous_spectral"
+      ]
+    },
+    "perceived_spatial_properties_enum": {
+      "type": "string",
+      "enum": [
+        "claustrophobic_intimate",
+        "cavernous_reverberant",
+        "distant_muffled",
+        "wide_diffused_field",
+        "focused_foreground_transient",
+        "subterranean_rumble",
+        "disembodied_floating"
+      ]
+    },
+    "cinematic_usage_enum": {
+      "type": "string",
+      "enum": [
+        "jump_scare_stinger",
+        "slow_burn_dread_underscore",
+        "psychological_breakdown",
+        "industrial_sci_fi_corridor",
+        "supernatural_manifestation",
+        "monster_vocal_presence",
+        "found_footage_signal_corrupt",
+        "ritual_occult_ambience",
+        "chase_sequence_pulse",
+        "liminal_space_drone"
+      ]
+    },
+    "annotation_provenance_enum": {
+      "type": "string",
+      "enum": [
+        "algorithmic_dsp_and_acoustic_heuristic_v0.1",
+        "algorithmic_provisional_seed_v0.1",
+        "human_expert_reviewed_v0.1",
+        "human_expert_corrected_v0.1"
+      ]
+    },
+    "human_review_status_enum": {
+      "type": "string",
+      "enum": [
+        "unreviewed_provisional",
+        "pending_human_review",
+        "human_reviewed_verified",
+        "human_reviewed_corrected",
+        "rejected"
+      ]
+    },
+    "copyright_and_licensing_status_enum": {
+      "type": "string",
+      "enum": [
+        "procedural_audio_unverified_copyright_human_schema_zazie_owned",
+        "zazie_verified_original_recording_commercial_licensable",
+        "factual_acoustic_metadata_noncopyrightable",
+        "restricted_internal_evaluation_only"
+      ]
+    }
+  },
+  "properties": {
+    "sample_id": {
+      "type": "string",
+      "pattern": "^zmh_hss_v01_[0-9]{4}$",
+      "description": "Unique identifier for the audio sample and annotation record."
+    },
+    "dataset_name": {
+      "type": "string",
+      "const": "ZMH Horror Sound Semantics"
+    },
+    "dataset_version": {
+      "type": "string",
+      "const": "0.1"
+    },
+    "publisher": {
+      "type": "string",
+      "const": "Zazie Productions LLC — Zazie Media Holdings"
+    },
+    "audio_filename": {
+      "type": "string",
+      "pattern": "^zmh_hss_v01_[0-9]{4}\\.wav$"
+    },
+    "duration": {
+      "type": "number",
+      "minimum": 0.5,
+      "maximum": 30.0,
+      "description": "Audio duration in seconds."
+    },
+    "sample_rate": {
+      "type": "integer",
+      "enum": [16000, 22050, 44100, 48000],
+      "description": "Audio sample rate in Hz."
+    },
+    "primary_emotion": {
+      "$ref": "#/$defs/emotion_enum"
+    },
+    "secondary_emotions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/emotion_enum"
+      }
+    },
+    "acoustic_texture": {
+      "$ref": "#/$defs/acoustic_texture_enum"
+    },
+    "sound_event_category": {
+      "$ref": "#/$defs/sound_event_category_enum"
+    },
+    "intensity": {
+      "$ref": "#/$defs/intensity_enum"
+    },
+    "intensity_score": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "tension": {
+      "$ref": "#/$defs/tension_enum"
+    },
+    "tension_score": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "rhythmic_characteristics": {
+      "$ref": "#/$defs/rhythmic_characteristics_enum"
+    },
+    "tonality": {
+      "$ref": "#/$defs/tonality_enum"
+    },
+    "perceived_spatial_properties": {
+      "$ref": "#/$defs/perceived_spatial_properties_enum"
+    },
+    "cinematic_usage": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/cinematic_usage_enum"
+      }
+    },
+    "natural_language_caption": {
+      "type": "string",
+      "minLength": 40,
+      "maxLength": 1000
+    },
+    "annotation_confidence": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "annotation_provenance": {
+      "$ref": "#/$defs/annotation_provenance_enum"
+    },
+    "human_review_status": {
+      "$ref": "#/$defs/human_review_status_enum"
+    },
+    "copyright_and_licensing_status": {
+      "$ref": "#/$defs/copyright_and_licensing_status_enum"
+    },
+    "psychological_label_disclaimer": {
+      "type": "string",
+      "minLength": 20
+    },
+    "split": {
+      "type": "string",
+      "enum": ["train", "validation", "test"]
+    },
+    "recipe_id": {
+      "type": "string",
+      "pattern": "^[a-z_]+_r[0-9]{2}$"
+    },
+    "variant_index": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10
+    },
+    "random_seed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "generation_method": {
+      "type": "string",
+      "enum": [
+        "procedural_dsp_synthesis",
+        "pretrained_ai_model",
+        "human_performed_or_field_recording"
+      ]
+    },
+    "uses_pretrained_ai_model": {
+      "type": "boolean"
+    },
+    "uses_third_party_samples": {
+      "type": "boolean"
+    },
+    "is_authentic_human_or_field_recording": {
+      "type": "boolean"
+    },
+    "sha256_checksum": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "synthesis_parameters": {
+      "type": "object",
+      "required": [
+        "engine_name",
+        "recipe_id",
+        "random_seed",
+        "base_frequency_hz",
+        "modulation_rate_hz",
+        "modulation_depth",
+        "filter_type",
+        "filter_cutoff_hz",
+        "noise_mix_ratio",
+        "nonlinear_drive",
+        "reverb_decay_sec",
+        "envelope_attack_sec",
+        "envelope_release_sec"
+      ],
+      "properties": {
+        "engine_name": { "type": "string" },
+        "recipe_id": { "type": "string" },
+        "random_seed": { "type": "integer" },
+        "base_frequency_hz": { "type": "number" },
+        "modulation_rate_hz": { "type": "number" },
+        "modulation_depth": { "type": "number" },
+        "filter_type": { "type": "string" },
+        "filter_cutoff_hz": { "type": "number" },
+        "noise_mix_ratio": { "type": "number" },
+        "nonlinear_drive": { "type": "number" },
+        "reverb_decay_sec": { "type": "number" },
+        "envelope_attack_sec": { "type": "number" },
+        "envelope_release_sec": { "type": "number" },
+        "additional_params": { "type": "object" }
+      }
+    },
+    "acoustic_features": {
+      "type": "object",
+      "required": [
+        "rms_energy",
+        "peak_amplitude",
+        "crest_factor_db",
+        "zero_crossing_rate",
+        "spectral_centroid_hz",
+        "spectral_bandwidth_hz",
+        "spectral_rolloff_85_hz",
+        "spectral_flatness",
+        "low_frequency_energy_ratio",
+        "high_frequency_energy_ratio",
+        "onset_strength_std",
+        "temporal_centroid_norm"
+      ],
+      "properties": {
+        "rms_energy": { "type": "number", "minimum": 0.0 },
+        "peak_amplitude": { "type": "number", "minimum": 0.0, "maximum": 1.001 },
+        "crest_factor_db": { "type": "number" },
+        "zero_crossing_rate": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "spectral_centroid_hz": { "type": "number", "minimum": 0.0 },
+        "spectral_bandwidth_hz": { "type": "number", "minimum": 0.0 },
+        "spectral_rolloff_85_hz": { "type": "number", "minimum": 0.0 },
+        "spectral_flatness": { "type": "number", "minimum": 0.0, "maximum": 1.001 },
+        "low_frequency_energy_ratio": { "type": "number", "minimum": 0.0, "maximum": 1.001 },
+        "high_frequency_energy_ratio": { "type": "number", "minimum": 0.0, "maximum": 1.001 },
+        "onset_strength_std": { "type": "number", "minimum": 0.0 },
+        "temporal_centroid_norm": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
+      }
+    },
+    "temporal_events": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["start_sec", "end_sec", "event_label"],
+        "properties": {
+          "start_sec": { "type": "number", "minimum": 0.0 },
+          "end_sec": { "type": "number", "minimum": 0.0 },
+          "event_label": { "type": "string" }
+        }
+      }
+    },
+    "human_review_audit": {
+      "type": "object",
+      "properties": {
+        "reviewed_by": { "type": "string" },
+        "reviewed_at": { "type": "string" },
+        "lead_time_seconds": { "type": "number" },
+        "was_corrected": { "type": "boolean" },
+        "reviewer_notes": { "type": "string" }
+      }
+    }
+  }
+}

@@ -1,0 +1,165 @@
+<View>
+  <Header value="ZMH Horror Sound Semantics (v0.1) — Audio &amp; Semantic Annotation Interface"/>
+
+  <View style="padding: 10px; background: #1a1a22; color: #f0f0f5; border-radius: 6px; margin-bottom: 12px;">
+    <Text name="meta_sample_id" value="Sample ID: $sample_id"/>
+    <Text name="meta_filename" value="Filename: $audio_filename"/>
+    <Text name="meta_signal_specs" value="Duration: $duration sec | Sample Rate: $sample_rate Hz | Method: $generation_method"/>
+    <Text name="meta_disclaimer" value="Disclaimer: $psychological_label_disclaimer"/>
+  </View>
+
+  <Header value="1. Waveform Playback &amp; Temporal Sound-Event Segmentation"/>
+  <Labels name="temporal_events" toName="audio" zoom="true" hotkey="ctrl+enter">
+    <Label value="dissonant_drones" background="#6b21a8"/>
+    <Label value="metallic_resonance" background="#475569"/>
+    <Label value="glitching_machinery" background="#0284c7"/>
+    <Label value="pulsating_bass_textures" background="#991b1b"/>
+    <Label value="digital_interference" background="#0d9488"/>
+    <Label value="atmospheric_tension_beds" background="#4338ca"/>
+    <Label value="irregular_rhythmic_transients" background="#d97706"/>
+    <Label value="synthetic_creature_sounds" background="#dc2626"/>
+    <Label value="spectral_textures" background="#7c3aed"/>
+    <Label value="unstable_pitch_modulated_tones" background="#db2777"/>
+  </Labels>
+  <Audio name="audio" value="$audio_url"/>
+
+  <Header value="2. Primary Sound-Event Category &amp; Acoustic Texture"/>
+  <Choices name="sound_event_category" toName="audio" choice="single" showInline="true" required="true">
+    <Choice value="dissonant_drones"/>
+    <Choice value="metallic_resonance"/>
+    <Choice value="glitching_machinery"/>
+    <Choice value="pulsating_bass_textures"/>
+    <Choice value="digital_interference"/>
+    <Choice value="atmospheric_tension_beds"/>
+    <Choice value="irregular_rhythmic_transients"/>
+    <Choice value="synthetic_creature_sounds"/>
+    <Choice value="spectral_textures"/>
+    <Choice value="unstable_pitch_modulated_tones"/>
+  </Choices>
+
+  <Choices name="acoustic_texture" toName="audio" choice="single" showInline="true" required="true">
+    <Choice value="dense_sub_harmonic"/>
+    <Choice value="inharmonic_metallic"/>
+    <Choice value="granular_stutter"/>
+    <Choice value="throbbing_low_end"/>
+    <Choice value="bitcrushed_aliased"/>
+    <Choice value="filtered_noise_wash"/>
+    <Choice value="percussive_erratic"/>
+    <Choice value="formant_guttural"/>
+    <Choice value="crystalline_spectral"/>
+    <Choice value="warped_microtonal"/>
+  </Choices>
+
+  <Header value="3. Perceived Affective / Emotional Semantics (Distinguish Provisional vs. Human-Verified)"/>
+  <Choices name="primary_emotion" toName="audio" choice="single" showInline="true" required="true">
+    <Choice value="dread"/>
+    <Choice value="anxiety"/>
+    <Choice value="uncertainty"/>
+    <Choice value="suspense"/>
+    <Choice value="shock"/>
+    <Choice value="unease"/>
+    <Choice value="anticipation"/>
+    <Choice value="disorientation"/>
+  </Choices>
+
+  <Choices name="secondary_emotions" toName="audio" choice="multiple" showInline="true" required="true">
+    <Choice value="dread"/>
+    <Choice value="anxiety"/>
+    <Choice value="uncertainty"/>
+    <Choice value="suspense"/>
+    <Choice value="shock"/>
+    <Choice value="unease"/>
+    <Choice value="anticipation"/>
+    <Choice value="disorientation"/>
+  </Choices>
+
+  <Header value="4. Intensity, Tension, Rhythm, Tonality &amp; Spatial Properties"/>
+  <Choices name="intensity" toName="audio" choice="single" showInline="true" required="true">
+    <Choice value="subtle"/>
+    <Choice value="low"/>
+    <Choice value="moderate"/>
+    <Choice value="high"/>
+    <Choice value="extreme"/>
+  </Choices>
+
+  <Choices name="tension" toName="audio" choice="single" showInline="true" required="true">
+    <Choice value="latent"/>
+    <Choice value="building"/>
+    <Choice value="sustained"/>
+    <Choice value="escalating"/>
+    <Choice value="climactic"/>
+  </Choices>
+
+  <Choices name="rhythmic_characteristics" toName="audio" choice="single" showInline="true" required="true">
+    <Choice value="arrhythmic_sustained"/>
+    <Choice value="slow_periodic_pulse"/>
+    <Choice value="fast_mechanical_stutter"/>
+    <Choice value="syncopated_heartbeat"/>
+    <Choice value="stochastic_intermittent"/>
+    <Choice value="accelerating_tremolo"/>
+    <Choice value="chaotic_polyrhythmic"/>
+  </Choices>
+
+  <Choices name="tonality" toName="audio" choice="single" showInline="true" required="true">
+    <Choice value="atonal_noise"/>
+    <Choice value="microtonal_cluster"/>
+    <Choice value="dissonant_bichord"/>
+    <Choice value="inharmonic_partial_series"/>
+    <Choice value="dark_pedal_drone"/>
+    <Choice value="unstable_glissando"/>
+    <Choice value="ambiguous_spectral"/>
+  </Choices>
+
+  <Choices name="perceived_spatial_properties" toName="audio" choice="single" showInline="true" required="true">
+    <Choice value="claustrophobic_intimate"/>
+    <Choice value="cavernous_reverberant"/>
+    <Choice value="distant_muffled"/>
+    <Choice value="wide_diffused_field"/>
+    <Choice value="focused_foreground_transient"/>
+    <Choice value="subterranean_rumble"/>
+    <Choice value="disembodied_floating"/>
+  </Choices>
+
+  <Header value="5. Cinematic Usage &amp; Natural-Language Caption"/>
+  <Choices name="cinematic_usage" toName="audio" choice="multiple" showInline="true" required="true">
+    <Choice value="jump_scare_stinger"/>
+    <Choice value="slow_burn_dread_underscore"/>
+    <Choice value="psychological_breakdown"/>
+    <Choice value="industrial_sci_fi_corridor"/>
+    <Choice value="supernatural_manifestation"/>
+    <Choice value="monster_vocal_presence"/>
+    <Choice value="found_footage_signal_corrupt"/>
+    <Choice value="ritual_occult_ambience"/>
+    <Choice value="chase_sequence_pulse"/>
+    <Choice value="liminal_space_drone"/>
+  </Choices>
+
+  <TextArea name="natural_language_caption" toName="audio" rows="3" maxSubmissions="1" editable="true" required="true" placeholder="Write or refine an accurate acoustic and cinematic description of the sound..."/>
+
+  <Header value="6. Provenance, Confidence, Review Status &amp; IP Classification"/>
+  <Number name="annotation_confidence" toName="audio" min="0.0" max="1.0" step="0.01" required="true"/>
+
+  <Choices name="annotation_provenance" toName="audio" choice="single" showInline="true" required="true">
+    <Choice value="algorithmic_dsp_and_acoustic_heuristic_v0.1"/>
+    <Choice value="algorithmic_provisional_seed_v0.1"/>
+    <Choice value="human_expert_reviewed_v0.1"/>
+    <Choice value="human_expert_corrected_v0.1"/>
+  </Choices>
+
+  <Choices name="human_review_status" toName="audio" choice="single" showInline="true" required="true">
+    <Choice value="unreviewed_provisional"/>
+    <Choice value="pending_human_review"/>
+    <Choice value="human_reviewed_verified"/>
+    <Choice value="human_reviewed_corrected"/>
+    <Choice value="rejected"/>
+  </Choices>
+
+  <Choices name="copyright_and_licensing_status" toName="audio" choice="single" showInline="true" required="true">
+    <Choice value="procedural_audio_unverified_copyright_human_schema_zazie_owned"/>
+    <Choice value="zazie_verified_original_recording_commercial_licensable"/>
+    <Choice value="factual_acoustic_metadata_noncopyrightable"/>
+    <Choice value="restricted_internal_evaluation_only"/>
+  </Choices>
+
+  <TextArea name="reviewer_notes" toName="audio" rows="2" maxSubmissions="1" editable="true" required="false" placeholder="Optional human reviewer audit notes or correction rationale..."/>
+</View>

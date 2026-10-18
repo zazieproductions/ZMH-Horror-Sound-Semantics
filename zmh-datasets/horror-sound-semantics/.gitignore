@@ -1,0 +1,17 @@
+# Keep large bulk renders, uncompressed archives, and local scratch exports out of Git.
+# Compact 16kHz mono validation samples in data/demo_audio/*.wav (~12.7 MB total)
+# are tracked for deterministic CI/CD and schema-to-audio verification.
+data/bulk_audio/
+data/high_res_audio/
+data/raw_renders/
+data/exports_large/
+*.flac
+*.zip
+*.tar.gz
+*.tgz
+.pytest_cache/
+__pycache__/
+*.pyc
+.env
+*.token
+*.key
