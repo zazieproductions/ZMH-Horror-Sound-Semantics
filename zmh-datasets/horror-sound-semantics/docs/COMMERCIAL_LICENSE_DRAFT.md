@@ -91,7 +91,7 @@ Except as expressly permitted in writing by Licensor, Licensee shall not:
 > **Summary:** A provenance-audited dataset and parameter-grounded synthesis corpus for cinematic horror audio classification, affective sound computing, and controllable text-to-SFX machine learning.  
 > **Key Specifications (v0.1 MVP Baseline):**
 > - **100 Validated Audio Clips** across 10 horror sound-event archetypes (`dissonant_drones`, `metallic_resonance`, `glitching_machinery`, `pulsating_bass_textures`, `digital_interference`, `atmospheric_tension_beds`, `irregular_rhythmic_transients`, `synthetic_creature_sounds`, `spectral_textures`, `unstable_pitch_modulated_tones`).
-> - **Rich 19-Field Semantic Schema** including primary/secondary emotions (`dread`, `anxiety`, `uncertainty`, `suspense`, `shock`, `unease`, `anticipation`, `disorientation`), intensity & tension ratings, rhythmic/tonal/spatial descriptors, cinematic usage tags, time-aligned region boundaries, and natural-language captions.
+> - **Rich 38-Field Semantic Schema** including primary/secondary emotions (`dread`, `anxiety`, `uncertainty`, `suspense`, `shock`, `unease`, `anticipation`, `disorientation`), intensity & tension ratings, rhythmic/tonal/spatial descriptors, cinematic usage tags, time-aligned region boundaries, and natural-language captions.
 > - **Complete DSP & Acoustic Ground Truth:** Includes exact synthesis parameters, random seeds, SHA-256 checksums, and 12 measured spectral/temporal signal metrics per clip.
 > - **Clean Provenance & Zero Third-Party Sample Contamination:** 100% free of scraped YouTube audio, unlicensed sample packs, or third-party generative AI outputs. Includes full per-sample `provenance_manifest.csv`.
 

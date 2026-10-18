@@ -6,7 +6,9 @@
 - **Domain:** Audio Machine Learning, Cinematic Sound Classification, Audio-Language Retrieval, Affective Sound Computing
 - **Total Validated Samples:** 100 (`zmh_hss_v01_0001` – `zmh_hss_v01_0100`)
 - **Audio Format:** 16,000 Hz, 16-bit PCM Mono WAV (`data/demo_audio/*.wav`)
-- **Total Audio Duration:** 262.5 seconds (individual clips range from 2.00s to 3.25s)
+- **Total Audio Duration:** 261.5 seconds (individual clips range from 2.00s to 3.25s)
+- **Committed Audio Payload:** 8,372,400 bytes across 100 WAV files (≈ 8.4 MB / 7.98 MiB)
+- **Structured Fields per Record:** 38 top-level schema properties (37 required), including 12 measured acoustic features, 14 DSP synthesis parameters, and 199 total `temporal_events` regions
 - **Human-Reviewed Annotations in v0.1 MVP:** 0 (100% of v0.1 MVP records are explicitly marked `human_review_status: "unreviewed_provisional"` and `annotation_provenance: "algorithmic_dsp_and_acoustic_heuristic_v0.1"`)
 
 ---
