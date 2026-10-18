@@ -21,6 +21,26 @@
 | **Cross-Split Recipe Leakage** | **0 Leaked Recipes** | `train` (30 recipes), `validation` (10 recipes), `test` (10 recipes) are mutually disjoint (`zero_recipe_leakage = True`) |
 | **Automated Pytest Suite** | **15 / 15 PASS** | Executed via `python3 -m pytest -v` (0 failures, 0 skipped) |
 
+### How to Reproduce This Report
+
+All figures above are machine-checkable from a clean checkout — no GPU, no Docker, no live Label Studio server:
+
+```bash
+cd zmh-datasets/horror-sound-semantics
+pip install -r requirements.txt
+
+python3 -m src.validate_dataset        # schema, SHA-256, readability, duplicates, split leakage
+python3 -m src.label_studio_integration \
+    --xml-config configs/annotation_config.xml \
+    --schema configs/dataset_schema.json  # interface ↔ vocabulary conformance
+python3 -m pytest -q                   # 15 tests
+
+# Raw counts behind the table above
+wc -l < data/training_data.jsonl                                   # 100
+ls data/demo_audio/*.wav | wc -l                                   # 100
+stat -c %s data/demo_audio/*.wav | awk '{s+=$1} END{print s}'      # 8372400 bytes
+```
+
 ---
 
 ## 2. Executed Test Suite Breakdown
@@ -63,6 +83,6 @@ In accordance with engineering and scientific transparency standards, the follow
 2. **Purely Procedural DSP Synthesis vs. Acoustic Foley:**
    - All v0.1 audio clips are synthesized mathematically via `numpy` and `scipy.signal`. While this guarantees 0% third-party copyright contamination and 100% deterministic reproducibility, procedural DSP alone does not capture the micro-acoustic complexity of physical Foley materials (e.g., bowed waterphone, dry ice on sheet metal, scraped cello strings, real architectural impulse responses).
 3. **16 kHz Mono Baseline Resolution:**
-   - The committed demo audio files in `data/demo_audio/` use `16,000 Hz` mono 16-bit PCM to keep repository footprint compact (`~12.7 MB` for 100 WAVs) and match standard speech/audio ML encoders (VGGish, Wav2Vec2, Whisper). High-resolution commercial sound-design and spatial audio models require `44.1 kHz` or `48 kHz` stereo/binaural rendering (supported via `--sample-rate 48000` in `src/generate_audio.py` for out-of-Git bulk storage).
+   - The committed demo audio files in `data/demo_audio/` use `16,000 Hz` mono 16-bit PCM to keep repository footprint compact (`8,372,400 bytes` ≈ `8.4 MB` for 100 WAVs) and match standard speech/audio ML encoders (VGGish, Wav2Vec2, Whisper). High-resolution commercial sound-design and spatial audio models require `44.1 kHz` or `48 kHz` stereo/binaural rendering (supported via `--sample-rate 48000` in `src/generate_audio.py` for out-of-Git bulk storage).
 4. **Offline File-Based Label Studio Synchronization in Sandbox:**
    - To respect the $0 budget and resource/storage constraints (avoiding full Docker stack / PostgreSQL / Redis deployment), Label Studio integration was validated via direct XML schema verification, task/prediction JSON generation (`data/label_studio_tasks.json`), and simulated human annotation export ingestion tests rather than against a live multi-container production server.
