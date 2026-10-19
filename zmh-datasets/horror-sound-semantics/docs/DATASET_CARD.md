@@ -6,8 +6,8 @@
 - **Domain:** Audio Machine Learning, Cinematic Sound Classification, Audio-Language Retrieval, Affective Sound Computing
 - **Total Validated Samples:** 100 (`zmh_hss_v01_0001` – `zmh_hss_v01_0100`)
 - **Audio Format:** 16,000 Hz, 16-bit PCM Mono WAV (`data/demo_audio/*.wav`)
-- **Total Audio Duration:** 261.5 seconds (individual clips range from 2.00s to 3.25s)
-- **Committed Audio Payload:** 8,372,400 bytes across 100 WAV files (≈ 8.4 MB / 7.98 MiB)
+- **Total Audio Duration:** 525.0 seconds (individual clips range from 2.00s to 3.25s)
+- **Committed Audio Payload:** 16,808,800 bytes across 200 WAV files (≈ 16.8 MB / 16.03 MiB)
 - **Structured Fields per Record:** 38 top-level schema properties (37 required), including 12 measured acoustic features, 14 DSP synthesis parameters, and 199 total `temporal_events` regions
 - **Human-Reviewed Annotations in v0.1 MVP:** 0 (100% of v0.1 MVP records are explicitly marked `human_review_status: "unreviewed_provisional"` and `annotation_provenance: "algorithmic_dsp_and_acoustic_heuristic_v0.1"`)
 
@@ -29,7 +29,7 @@ General-purpose audio datasets (such as AudioSet, ESC-50, and FSD50K) focus prim
 
 ## 2. Dataset Composition & Sound-Event Categories
 
-The v0.1 dataset contains **100 procedurally synthesized audio clips** evenly balanced across **10 sound-event categories** (10 samples per category: 5 synthesis recipes × 2 parameter/seed variants per recipe):
+The v0.1 dataset contains **100 procedurally synthesized audio clips** evenly balanced across **10 sound-event categories** (20 samples per category: 5 synthesis recipes × 2 parameter/seed variants per recipe):
 
 | Sound-Event Category | Count | DSP Synthesis Architecture (`engine_name`) | Mean Spectral Centroid (Hz) | Mean Spectral Flatness | Mean Low-Freq Ratio (<250 Hz) | Mean Crest Factor (dB) | Mean Onset Std |
 |---|---:|---|---:|---:|---:|---:|---:|
@@ -88,5 +88,5 @@ Every record in `data/training_data.jsonl` is validated against `configs/dataset
 ## 5. Provenance, Ethics & Limitations
 
 - **Zero Third-Party Audio or Pretrained Model Weights:** All 100 audio files in v0.1 are generated mathematically via `numpy` and `scipy.signal`. No copyrighted field recordings, sample packs, or neural audio generators were used.
-- **No Fabricated Human Judgments:** All 100 records in v0.1 carry `human_review_status = "unreviewed_provisional"`. Emotional and psychological descriptors in v0.1 are provisional heuristic proposals awaiting human perceptual audit in Label Studio.
+- **No Fabricated Human Judgments:** All 200 records in v0.1 carry `human_review_status = "unreviewed_provisional"`. Emotional and psychological descriptors in v0.1 are provisional heuristic proposals awaiting human perceptual audit in Label Studio.
 - **Procedural Audio Copyright Notice:** Purely procedural waveforms do not automatically qualify for standalone copyright protection under U.S. law; see `docs/IP_OWNERSHIP.md` for how Zazie Media Holdings separates compilation/schema rights from raw synthetic waveforms.

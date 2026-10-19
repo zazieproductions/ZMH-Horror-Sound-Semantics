@@ -9,13 +9,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 def test_full_dataset_validation_passes_on_production_data() -> None:
-    """Full validation across all 100 records, WAV files, CSVs, JSONL, and XML must pass."""
+    """Full validation across all 200 records, WAV files, CSVs, JSONL, and XML must pass."""
     report = validate_full_dataset(BASE_DIR)
     assert report["valid"] is True
     assert report["error_count"] == 0
-    assert report["total_records"] == 100
+    assert report["total_records"] == 200
     assert report["human_reviewed_count"] == 0
-    assert report["review_status_breakdown"] == {"unreviewed_provisional": 100}
+    assert report["review_status_breakdown"] == {"unreviewed_provisional": 200}
 
 
 def test_idempotent_pipeline_execution_does_not_duplicate_records(tmp_path: Path) -> None:

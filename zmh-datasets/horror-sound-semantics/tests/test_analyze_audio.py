@@ -10,10 +10,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 AUDIO_DIR = BASE_DIR / "data" / "demo_audio"
 
 
-def test_all_100_demo_audio_files_open_and_analyze_cleanly() -> None:
-    """All 100 generated WAV files in data/demo_audio must open and return finite acoustic features."""
+def test_all_demo_audio_files_open_and_analyze_cleanly() -> None:
+    """All generated WAV files in data/demo_audio must open and return finite acoustic features."""
     wav_files = sorted(AUDIO_DIR.glob("*.wav"))
-    assert len(wav_files) == 100
+    assert len(wav_files) == 200
 
     for wav_path in wav_files:
         data, sr, nchannels, sampwidth, nframes = read_wav_as_float64(wav_path)
@@ -24,7 +24,7 @@ def test_all_100_demo_audio_files_open_and_analyze_cleanly() -> None:
         assert np.all(np.isfinite(data))
 
     # Full spectral/temporal feature analysis on a representative subset across categories
-    for idx in range(0, 100, 10):
+    for idx in range(0, len(wav_files), max(1, len(wav_files) // 10)):
         res = analyze_wav_file(wav_files[idx])
         feats = res.acoustic_features
         assert 0.01 < feats["rms_energy"] <= 1.0
