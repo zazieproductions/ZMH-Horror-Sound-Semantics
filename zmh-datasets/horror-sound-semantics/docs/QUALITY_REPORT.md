@@ -15,7 +15,7 @@
 | **Human-Reviewed Annotations** | **0** | 100% marked `unreviewed_provisional` (zero fabricated human reviews) |
 | **Physical WAV Verification** | **100 / 100 PASS** | All 100 WAV files open cleanly, 16,000 Hz, 16-bit mono PCM, finite samples, non-silent (`rms_energy > 0.01`) |
 | **SHA-256 Checksum Integrity** | **100 / 100 PASS** | Every WAV file's on-disk SHA-256 matches `training_data.jsonl`, `metadata.csv`, and `provenance_manifest.csv` |
-| **Duplicate Detection** | **0 Duplicates** | 100 unique `sample_id`s, 100 unique `audio_filename`s, 100 unique SHA-256 hashes, 100 unique `(recipe_id, variant_index)` pairs |
+| **Duplicate Detection** | **0 Duplicates** | 200 unique `sample_id`s, 200 unique `audio_filename`s, 200 unique SHA-256 hashes, 200 unique `(recipe_id, variant_index)` pairs |
 | **Sample-to-Metadata Correspondence** | **1-to-1 Exact** | `demo_audio/*.wav` (100) ↔ `training_data.jsonl` (100) ↔ `metadata.csv` (100) ↔ `provenance_manifest.csv` (100) ↔ `label_studio_tasks.json` (100) |
 | **Split Stratification** | **60 / 20 / 20** | 60 `train`, 20 `validation`, 20 `test` (exactly 6/2/2 per category across all 10 categories) |
 | **Cross-Split Recipe Leakage** | **0 Leaked Recipes** | `train` (30 recipes), `validation` (10 recipes), `test` (10 recipes) are mutually disjoint (`zero_recipe_leakage = True`) |
@@ -79,10 +79,10 @@ Analysis of all 100 generated WAV files via `src/analyze_audio.py` confirms stro
 In accordance with engineering and scientific transparency standards, the following technical limitations of v0.1 are documented:
 
 1. **Zero Human-Reviewed Annotations in v0.1 Automated Build:**
-   - All 100 records in v0.1 are algorithmically proposed (`human_review_status: "unreviewed_provisional"`). While the Label Studio human review and correction ingestion workflow (`ingest_human_annotations_from_label_studio`) is implemented and unit-tested, actual human listening sessions must be conducted before any record's affective labels are marketed as verified human perceptual judgments.
+   - All 200 records in v0.1 are algorithmically proposed (`human_review_status: "unreviewed_provisional"`). While the Label Studio human review and correction ingestion workflow (`ingest_human_annotations_from_label_studio`) is implemented and unit-tested, actual human listening sessions must be conducted before any record's affective labels are marketed as verified human perceptual judgments.
 2. **Purely Procedural DSP Synthesis vs. Acoustic Foley:**
    - All v0.1 audio clips are synthesized mathematically via `numpy` and `scipy.signal`. While this guarantees 0% third-party copyright contamination and 100% deterministic reproducibility, procedural DSP alone does not capture the micro-acoustic complexity of physical Foley materials (e.g., bowed waterphone, dry ice on sheet metal, scraped cello strings, real architectural impulse responses).
 3. **16 kHz Mono Baseline Resolution:**
-   - The committed demo audio files in `data/demo_audio/` use `16,000 Hz` mono 16-bit PCM to keep repository footprint compact (`8,372,400 bytes` ≈ `8.4 MB` for 100 WAVs) and match standard speech/audio ML encoders (VGGish, Wav2Vec2, Whisper). High-resolution commercial sound-design and spatial audio models require `44.1 kHz` or `48 kHz` stereo/binaural rendering (supported via `--sample-rate 48000` in `src/generate_audio.py` for out-of-Git bulk storage).
+   - The committed demo audio files in `data/demo_audio/` use `16,000 Hz` mono 16-bit PCM to keep repository footprint compact (`16,808,800 bytes` ≈ `16.8 MB` for 200 WAVs) and match standard speech/audio ML encoders (VGGish, Wav2Vec2, Whisper). High-resolution commercial sound-design and spatial audio models require `44.1 kHz` or `48 kHz` stereo/binaural rendering (supported via `--sample-rate 48000` in `src/generate_audio.py` for out-of-Git bulk storage).
 4. **Offline File-Based Label Studio Synchronization in Sandbox:**
    - To respect the $0 budget and resource/storage constraints (avoiding full Docker stack / PostgreSQL / Redis deployment), Label Studio integration was validated via direct XML schema verification, task/prediction JSON generation (`data/label_studio_tasks.json`), and simulated human annotation export ingestion tests rather than against a live multi-container production server.

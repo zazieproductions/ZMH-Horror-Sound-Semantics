@@ -2,7 +2,7 @@
 
 **Owner / Publisher:** Zazie Productions LLC — Zazie Media Holdings  
 **Product Category:** Audio Machine Learning / Cinematic Sound Classification & Audio-Language Semantics  
-**Dataset Version:** 0.1 (MVP) — 100 samples, 10 categories, 0 human-reviewed records  
+**Dataset Version:** 0.1 (MVP) — 200 samples, 10 categories, 0 human-reviewed records  
 **Parent repository:** Zazie fork of [HumanSignal/label-studio](https://github.com/HumanSignal/label-studio) (upstream platform: Apache-2.0)
 
 > Start at the [repository root README](../../README.md) for the fork-level overview, install paths, and licensing summary. This file is the technical manual for the dataset itself.
@@ -15,10 +15,10 @@
 
 It delivers:
 
-- **100 original procedural horror audio samples** (`data/demo_audio/zmh_hss_v01_0001.wav` – `zmh_hss_v01_0100.wav`, 8.4 MB, 261.5 s total) synthesized across **10 cinematic horror sound-event categories** using deterministic digital signal processing (DSP) with zero third-party samples and zero pretrained generative AI weights.
+- **200 original procedural horror audio samples** (`data/demo_audio/zmh_hss_v01_0001.wav` – `zmh_hss_v01_0200.wav`, 16.8 MB, 525 s total) synthesized across **10 cinematic horror sound-event categories** using deterministic digital signal processing (DSP) with zero third-party samples and zero pretrained generative AI weights.
 - **12 factual acoustic signal measurements** per clip extracted via windowed FFT/STFT and temporal envelope analysis (`src/analyze_audio.py`).
 - **38 structured semantic, technical, and provenance fields** per record (37 schema-required), enforced by a strict JSON Schema Draft 2020-12 specification (`configs/dataset_schema.json`).
-- **100 unique natural-language captions** and **199 time-aligned event regions** available for waveform review.
+- **200 unique natural-language captions** and **450 time-aligned event regions** available for waveform review.
 - **A dedicated Label Studio audio-labeling configuration** (`configs/annotation_config.xml`, 17 interactive controls) and task/prediction integration (`src/label_studio_integration.py`) supporting waveform region tagging, controlled-vocabulary classification, natural-language caption refinement, and human review status tracking.
 - **Strict IP and provenance separation** (`data/provenance_manifest.csv` and `docs/IP_OWNERSHIP.md`) distinguishing upstream Apache 2.0 software, Zazie-authored software/schemas, Zazie-controlled creative compilations, and noncopyrightable factual measurements / procedural waveforms.
 
@@ -26,19 +26,19 @@ It delivers:
 
 | Property | Verified value |
 |---|---|
-| Records in `training_data.jsonl` | 100 (10 per category, 10 categories) |
+| Records in `training_data.jsonl` | 200 (20 per category, 10 categories) |
 | Rows × columns in `metadata.csv` | 100 × 31 |
 | Tasks in `label_studio_tasks.json` | 100, each `data` + `predictions` |
 | Audio format | 16,000 Hz, 16-bit PCM mono WAV |
-| Total / min / max clip duration | 261.5 s / 2.00 s / 3.25 s |
-| Audio payload on disk | 8,372,400 bytes (7.98 MiB) |
-| Distinct `recipe_id` groups | 50 (5 recipes × 10 categories), 2 variants each |
-| Splits | 60 train / 20 validation / 20 test |
+| Total / min / max clip duration | 525.0 s / 2.00 s / 3.25 s |
+| Audio payload on disk | 16,808,800 bytes (16.03 MiB) |
+| Distinct `recipe_id` groups | 100 (10 recipes × 10 categories), 2 variants each |
+| Splits | 120 train / 40 validation / 40 test |
 | Recipes shared across splits | 0 |
 | `temporal_events` segments | 199 |
 | Distinct captions | 100 |
-| `human_review_status` | `unreviewed_provisional` for all 100 |
-| `generation_method` | `procedural_dsp_synthesis` for all 100 |
+| `human_review_status` | `unreviewed_provisional` for all 200 |
+| `generation_method` | `procedural_dsp_synthesis` for all 200 |
 | Automated tests | 15 / 15 passing |
 
 ### Provisional `primary_emotion` distribution
@@ -143,6 +143,10 @@ python3 -m pytest -v        # 15 tests: synthesis determinism, feature extractio
 
 ---
 
+## Hugging Face Dataset Discovery and Import
+
+For beginner-friendly, copy-paste examples of public Hub discovery, five-row streaming previews, license review, and metadata-only approved imports, see [`docs/HUGGINGFACE_IMPORT.md`](docs/HUGGINGFACE_IMPORT.md). The integration stores third-party records separately and never downloads audio payloads or imports outside the CC0/CC BY 4.0 allowlist.
+
 ## 4. Label Studio Integration Workflow
 
 The labeling interface exposes **17 interactive controls**: 13 `<Choices>` groups (10 `sound_event_category`, 10 `acoustic_texture`, 8 `primary_emotion`, 8 `secondary_emotions`, 5 `intensity`, 5 `tension`, 7 `rhythmic_characteristics`, 7 `tonality`, 7 `perceived_spatial_properties`, 10 `cinematic_usage`, 4 `annotation_provenance`, 5 `human_review_status`, 4 `copyright_and_licensing_status`), 1 `<Labels>` group with 10 waveform region tags (`temporal_events`), 2 `<TextArea>` (`natural_language_caption`, `reviewer_notes`), and 1 `<Number>` (`annotation_confidence`). Audio playback binds to `$audio_url`.
@@ -190,7 +194,7 @@ Filter on `human_review_status` before treating any affective label as a percept
 
 ## 6. Known Limitations (stated up front)
 
-1. **No human-reviewed annotations yet** — all 100 records are `unreviewed_provisional`; the review ingestion path is implemented and unit-tested but has not been run against real listening sessions.
+1. **No human-reviewed annotations yet** — all 200 records are `unreviewed_provisional`; the review ingestion path is implemented and unit-tested but has not been run against real listening sessions.
 2. **Procedural DSP, not acoustic Foley** — deterministic synthesis guarantees copyright cleanliness but omits the micro-acoustic complexity of physical sources (bowed waterphone, dry ice on sheet metal, real room impulse responses).
 3. **16 kHz mono baseline** — keeps the committed payload at 8.4 MB and matches standard audio ML encoders (VGGish, Wav2Vec2, Whisper); use `--sample-rate 48000` for high-resolution renders, which are deliberately excluded from Git by `.gitignore`.
 4. **v0.1 is small by design** — 100 clips across 10 classes is a schema and pipeline validation milestone, not a production-scale training corpus. See `docs/QUALITY_REPORT.md` for the full audit.

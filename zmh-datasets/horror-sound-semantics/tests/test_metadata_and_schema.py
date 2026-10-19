@@ -19,7 +19,7 @@ JSONL_PATH = BASE_DIR / "data" / "training_data.jsonl"
 def test_all_records_comply_with_dataset_json_schema() -> None:
     """Every record in training_data.jsonl must pass JSON Schema validation with 0 errors."""
     records = load_from_jsonl(JSONL_PATH)
-    assert len(records) == 100
+    assert len(records) == 200
     errors = validate_records_against_schema(records, SCHEMA_PATH)
     assert errors == []
 
@@ -62,11 +62,11 @@ def test_provenance_and_ip_boundary_rules() -> None:
 
 
 def test_stratified_splits_and_zero_recipe_leakage() -> None:
-    """Splits must be 60/20/20 stratified and have 0 overlapping recipe_ids across splits."""
+    """Splits must be 120/40/40 stratified and have 0 overlapping recipe_ids across splits."""
     records = load_from_jsonl(JSONL_PATH)
     errors, summary = validate_splits_and_leakage(records)
     assert errors == []
-    assert summary["counts_by_split"] == {"train": 60, "validation": 20, "test": 20}
+    assert summary["counts_by_split"] == {"train": 120, "validation": 40, "test": 40}
     assert summary["zero_recipe_leakage"] is True
 
     # Inject cross-split recipe leakage and verify detection
