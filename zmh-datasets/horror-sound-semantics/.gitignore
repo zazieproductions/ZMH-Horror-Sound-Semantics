@@ -15,3 +15,14 @@ __pycache__/
 .env
 *.token
 *.key
+
+# Hugging Face export (huggingface/) — rebuilt by `python3 -m src.export_huggingface build`.
+# README.md, LICENSE.md and data/*/metadata.jsonl are tracked for review. The WAV copies
+# (already tracked once in data/demo_audio/), the supplementary duplicates, and the generated
+# manifest/LFS attributes are not.
+huggingface/data/**/*.wav
+huggingface/supplementary/
+huggingface/MANIFEST.sha256
+huggingface/.gitattributes
+# Local third-party metadata imports are never part of the Hub export.
+data/third_party/

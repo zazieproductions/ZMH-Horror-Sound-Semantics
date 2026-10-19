@@ -1,0 +1,8 @@
+# Optional: Hugging Face Hub publishing + verification tooling
+#   src/export_huggingface.py (local `datasets` load check) and src/publish_huggingface.py.
+# Install on top of requirements.txt:  pip install -r requirements-hub.txt
+-r requirements.txt
+huggingface_hub>=0.25.0
+datasets>=3.0.0
+soundfile>=0.12.0
+librosa>=0.10.0        # audio decoding backend for datasets<4 (datasets>=4 uses torchcodec+FFmpeg)

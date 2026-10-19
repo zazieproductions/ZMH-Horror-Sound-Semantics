@@ -39,7 +39,7 @@ It delivers:
 | Distinct captions | 100 |
 | `human_review_status` | `unreviewed_provisional` for all 200 |
 | `generation_method` | `procedural_dsp_synthesis` for all 200 |
-| Automated tests | 15 / 15 passing |
+| Automated tests | 34 / 34 passing |
 
 ### Provisional `primary_emotion` distribution
 
@@ -53,8 +53,9 @@ It delivers:
 ```text
 zmh-datasets/horror-sound-semantics/
 ├── README.md                        # this file
-├── requirements.txt                 # numpy, scipy, jsonschema, requests, pytest ($0 / CPU-only)
-├── .gitignore                       # excludes bulk/high-res renders from Git
+├── requirements.txt                 # numpy, scipy, jsonschema, requests, pytest, pyyaml ($0 / CPU-only)
+├── requirements-hub.txt             # optional: huggingface_hub, datasets, soundfile, librosa for Hub publishing
+├── .gitignore                       # excludes bulk/high-res renders and generated Hub export copies from Git
 ├── src/
 │   ├── __init__.py
 │   ├── generate_audio.py            # Deterministic 10-category procedural DSP audio synthesizer
@@ -63,6 +64,9 @@ zmh-datasets/horror-sound-semantics/
 │   ├── label_studio_integration.py  # Label Studio XML validator, task exporter & human review ingester
 │   ├── validate_dataset.py          # Schema, checksum, audio readability & split-leakage validator
 │   ├── export_dataset.py            # JSONL, CSV, provenance manifest & Label Studio JSON exporter
+│   ├── export_huggingface.py        # Hub AudioFolder export builder + local integrity / card verifier
+│   ├── publish_huggingface.py       # PRIVATE Hub upload + post-upload verification (files, SHA-256, viewer)
+│   ├── huggingface_integration.py   # Inbound: public Hub discovery, 5-row preview, gated metadata import
 │   └── pipeline.py                  # Idempotent end-to-end orchestration pipeline
 ├── configs/
 │   ├── annotation_config.xml        # Label Studio audio waveform + semantic labeling interface
@@ -73,8 +77,14 @@ zmh-datasets/horror-sound-semantics/
 │   ├── training_data.jsonl          # Complete structured ML training records (100 JSON lines)
 │   ├── provenance_manifest.csv      # Per-sample IP, provenance & licensing classification manifest
 │   └── label_studio_tasks.json      # Pre-labeled Label Studio import tasks (`data` + `predictions`)
+├── huggingface/                     # Hub-ready dataset repository (AudioFolder layout)
+│   ├── README.md                    # Hub dataset card: YAML front matter + card adapted from DATASET_CARD.md
+│   ├── LICENSE.md                   # Licensing status notice — no public licence selected
+│   └── data/{train,validation,test}/metadata.jsonl   # tracked; WAV copies are generated, not tracked
 ├── docs/
 │   ├── DATASET_CARD.md              # Technical datasheet, distributions, splits & acoustic profiles
+│   ├── HUGGINGFACE_PUBLISH.md       # Outbound: build, privately upload & verify the Hub dataset
+│   ├── HUGGINGFACE_IMPORT.md        # Inbound: discover / preview / gated import of third-party Hub datasets
 │   ├── ANNOTATION_GUIDELINES.md     # Human annotator handbook & controlled vocabulary definitions
 │   ├── IP_OWNERSHIP.md              # 4-tier intellectual property & copyright boundary framework
 │   ├── QUALITY_REPORT.md            # Empirical validation results, test audit & technical limitations
@@ -84,7 +94,9 @@ zmh-datasets/horror-sound-semantics/
     ├── test_analyze_audio.py
     ├── test_metadata_and_schema.py
     ├── test_label_studio_integration.py
-    └── test_pipeline_and_exports.py
+    ├── test_pipeline_and_exports.py
+    ├── test_huggingface_integration.py
+    └── test_huggingface_export.py
 ```
 
 ---
@@ -137,13 +149,28 @@ python3 -m src.export_dataset --input-jsonl data/training_data.jsonl --data-dir 
 ### Run Automated Test Suite
 
 ```bash
-python3 -m pytest -v        # 15 tests: synthesis determinism, feature extraction,
-                            # schema conformance, LS round-trip, idempotent pipeline
+python3 -m pytest -v        # 34 tests: synthesis determinism, feature extraction, schema conformance,
+                            # LS round-trip, idempotent pipeline, Hub import gating, Hub export + publish guards
 ```
 
 ---
 
-## Hugging Face Dataset Discovery and Import
+## Hugging Face Hub
+
+### Publishing this dataset (outbound, private)
+
+`huggingface/` is a Hub-ready copy of the dataset in the AudioFolder layout: `data/{train,validation,test}/metadata.jsonl` rows point at the 200 WAVs via `file_name`, and `huggingface/README.md` is the dataset card (YAML front matter + body adapted from `docs/DATASET_CARD.md`). Every row keeps `human_review_status`, `annotation_provenance`, `generation_method`, the provenance booleans and SHA-256 verbatim, and gains the per-sample IP categories from `provenance_manifest.csv` plus a `content_origin` marker, so original ZMH audio, unreviewed algorithmic metadata, and (absent) third-party content stay distinguishable on the Hub.
+
+```bash
+pip install -r requirements-hub.txt
+python3 -m src.export_huggingface build                                   # build + verify locally (datasets load, audio decode)
+python3 -m src.publish_huggingface upload --repo-id <ns>/zmh-horror-sound-semantics   # PRIVATE repo only
+python3 -m src.publish_huggingface verify --repo-id <ns>/zmh-horror-sound-semantics   # 200 files, LFS SHA-256, viewer, playback
+```
+
+The tooling refuses to export third-party records, refuses to publish under a public redistribution licence, refuses to upload to a public repository, and rejects card wording that calls unreviewed labels expert-validated. See [`docs/HUGGINGFACE_PUBLISH.md`](docs/HUGGINGFACE_PUBLISH.md).
+
+### Discovering and importing third-party datasets (inbound)
 
 For beginner-friendly, copy-paste examples of public Hub discovery, five-row streaming previews, license review, and metadata-only approved imports, see [`docs/HUGGINGFACE_IMPORT.md`](docs/HUGGINGFACE_IMPORT.md). The integration stores third-party records separately and never downloads audio payloads or imports outside the CC0/CC BY 4.0 allowlist.
 

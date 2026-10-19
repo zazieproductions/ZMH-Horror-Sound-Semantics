@@ -199,6 +199,8 @@ Start with the dataset's own [README](zmh-datasets/horror-sound-semantics/README
 | [QUALITY_REPORT.md](zmh-datasets/horror-sound-semantics/docs/QUALITY_REPORT.md) | Validation results, test audit, and documented technical limitations |
 | [IP_OWNERSHIP.md](zmh-datasets/horror-sound-semantics/docs/IP_OWNERSHIP.md) | The 4-tier rights separation (upstream SW / ZMH software / compilations / noncopyrightable facts) |
 | [COMMERCIAL_LICENSE_DRAFT.md](zmh-datasets/horror-sound-semantics/docs/COMMERCIAL_LICENSE_DRAFT.md) | Draft commercial licensing and positioning — **draft, not legal advice** |
+| [HUGGINGFACE_PUBLISH.md](zmh-datasets/horror-sound-semantics/docs/HUGGINGFACE_PUBLISH.md) | Building the Hub-ready copy ([`huggingface/`](zmh-datasets/horror-sound-semantics/huggingface/), card at [`huggingface/README.md`](zmh-datasets/horror-sound-semantics/huggingface/README.md)), private upload, and post-upload verification |
+| [HUGGINGFACE_IMPORT.md](zmh-datasets/horror-sound-semantics/docs/HUGGINGFACE_IMPORT.md) | Discovering, previewing, and gated metadata-only import of third-party Hub datasets (none approved or included) |
 
 Known v0.1 limitations are stated plainly in the quality report: zero human-reviewed annotations so far, procedural DSP rather than acoustic Foley (no bowed waterphone, no real room impulse responses), a 16 kHz mono baseline, and Label Studio integration validated via XML/schema and simulated export ingestion rather than a live multi-container deployment.
 
